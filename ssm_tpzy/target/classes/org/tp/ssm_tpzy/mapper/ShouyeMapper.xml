@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace唯一标识此名字下的crud语句
+ -->
+ 
+ 
+ <mapper namespace="org.tp.ssm_tpzy.mapper.ShouyeMapper">
+
+ <resultMap type="org.tp.ssm_tpzy.pojo.Test" id="userReMap">
+      <id column="id" property="id"/>
+		     <result column="name" property="name" />
+			<result column="img" property="img"/>
+			<result column="mark" property="mark"/>
+			<result column="product" property="product"/>
+			<result column="territory" property="territory"/>
+			<result column="introduce" property="introduce"/>
+			<result column="demand" property="demand"/>
+			<result column="requires" property="requires"/>
+			<result column="tvideo" property="tvideo"/>
+			<result column="createTime" property="createTime"/>
+			<result column="updateTime" property="updateTime"/>
+			<result column="is_delete" property="is_delete"/>
+		 <association property="type" javaType="org.tp.ssm_tpzy.pojo.Type">
+		     <id column="tid" property="tid"/>
+			<result column="tname" property="tname"/>
+		 </association>
+	</resultMap>
+
+
+
+
+	<select id="findOne" resultMap="userReMap" parameterType="int">
+	     select ts.*,ty.tid,ty.tname from test ts,type ty where ts.tid=ty.tid and ty.tid=#{i}
+	</select>
+	
+	<select id="show" resultMap="userReMap" parameterType="Test">
+	     select ts.*,ty.tid,ty.tname from test ts,type ty where ts.tid=ty.tid and ts.id=#{id}
+	</select>
+	
+	<select id="showGywm" resultType="GywmTest">
+	     select * from GywmTest
+	</select>
+
+    <select id="showOneGywm" resultType="GywmTest" parameterType="GywmTest">
+         select * from GywmTest where gywmTestId=#{gywmTestId}
+    </select>
+    
+    
+    <select id="news" resultType="HyzxTest">
+	     select * from HyzxTest
+	</select>
+
+    <select id="newsdetail" resultType="HyzxTest" parameterType="HyzxTest">
+         select * from HyzxTest where hyzxTestId=#{hyzxTestId}
+    </select>
+    
+    
+      <select id="zhigaibian" resultMap="userReMap" parameterType="java.util.Map">
+      select ho.*,tp.tid,tp.tname from test ho ,type tp where ho.tid=tp.tid and ho.is_delete=#{is_delete}
+      <if test="mohu!=null and mohu!=''">
+      and (ho.name like concat('%',#{mohu},'%'))
+      </if> 
+   </select>
+ </mapper>

@@ -1,0 +1,28 @@
+#word{
+    position: absolute;
+    z-index: 99;
+    width: 235px;
+    height: auto;
+    background-color: rgb(67, 65, 82);
+    border: black solid 1px;
+    display: none;
+    margin-top:40px;
+    margin-left:-10px;
+    color: white;
+    padding:5px;
+}
+.click_work{
+    padding-bottom: 8px;
+    font-weight:lighter;
+    font-size: 13px;
+    cursor:pointer;/*鼠标放上变成小手*/
+}
+.click_work:hover{
+    color: rgb(180, 289, 253);
+    padding:5px;
+    background-color: rgb(70, 86, 130);
+}
+.error{
+    color: gray;
+    cursor:pointer;/*鼠标放上变成小手*/
+}

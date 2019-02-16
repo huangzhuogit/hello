@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace唯一标识此名字下的crud语句
+ -->
+<mapper namespace="org.tp.ssm_tpzy.mapper.UserInfoMapper">
+  <select id="login"  resultType="userInfo" parameterType="userInfo">
+     select * from userInfo where loginName=#{loginName} and loginPwd=#{loginPwd}
+  </select>
+ 
+ <insert id="right" parameterType="userInfo">
+    insert into userInfo(loginName,loginPwd,userName,userPhone,createTime,is_delete) values(#{loginName},#{loginPwd},#{userName},#{userPhone},#{createTime},#{is_delete})
+ </insert>
+ 
+   <select id="yanName"  resultType="userInfo" parameterType="userInfo">
+     select * from userInfo where loginName=#{loginName} and uid!=#{uid}
+  </select>
+ 
+  <select id="yanPhone"  resultType="userInfo" parameterType="userInfo">
+     select * from userInfo where userPhone=#{userPhone} and uid!=#{uid}
+  </select>
+  
+    <select id="findAll"  resultType="userInfo" parameterType="userInfo">
+     select * from userInfo where is_delete=#{is_delete}
+  </select>
+  
+   <select id="getOne"  resultType="userInfo" parameterType="userInfo">
+     select * from userInfo where uid=#{uid}
+  </select>
+  
+  <update id="deleteOne" parameterType="userInfo">
+     update userInfo set is_delete=#{is_delete} where uid=#{uid}
+  </update>
+  
+   <update id="update" parameterType="userInfo">
+     update userInfo set loginName=#{loginName},loginPwd=#{loginPwd},userName=#{userName},userPhone=#{userPhone},updateTime=#{updateTime},is_delete=#{is_delete} where uid=#{uid}
+  </update>
+  
+  
+ <select id="showGood" resultType="userInfo" parameterType="java.util.Map">
+      select * from userInfo ho where ho.is_delete=#{is_delete}
+    <if test="mohu!=null and mohu!=''">
+     and (ho.uid like concat('%',#{mohu},'%') or ho.loginName like concat('%',#{mohu},'%') or
+    ho.loginPwd like concat('%',#{mohu},'%') or ho.userPhone like concat('%',#{mohu},'%') or
+    ho.userName like concat('%',#{mohu},'%') )
+      </if> 
+   </select>
+ </mapper>

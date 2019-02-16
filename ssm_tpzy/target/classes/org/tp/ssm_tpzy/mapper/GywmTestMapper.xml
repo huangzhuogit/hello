@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace唯一标识此名字下的crud语句
+ -->
+ 
+ <mapper namespace="org.tp.ssm_tpzy.mapper.GywmTestMapper">
+    
+    <select id="find" resultType="GywmTest" parameterType="GywmTest">
+      select * from gywmTest where is_delete=#{is_delete}
+    </select>
+    
+    <insert id="add" parameterType="GywmTest">
+      insert into gywmTest(gywmTestName,gywmTypeName,gywmTestImg,is_delete,createTime) values(#{gywmTestName},#{gywmTypeName},#{gywmTestImg},#{is_delete},#{createTime})
+    </insert>
+    
+    <update id="update" parameterType="GywmTest">
+     update gywmTest set gywmTestName=#{gywmTestName},gywmTypeName=#{gywmTypeName},gywmTestImg=#{gywmTestImg},updateTime=#{updateTime} where gywmTestId=#{gywmTestId}
+    </update>
+    
+    <select id="showOne" resultType="GywmTest" parameterType="GywmTest">
+    select * from gywmTest where gywmTestId=#{gywmTestId}
+    </select>
+    
+    <update id="deleteOne" parameterType="GywmTest">
+    update gywmTest set is_delete=#{is_delete} where gywmTestId=#{gywmTestId}
+    </update>
+    
+    <select id="show" resultType="GywmTest" parameterType="java.util.Map">
+      select * from gywmTest ho where ho.is_delete=#{is_delete}
+    <if test="mohu!=null and mohu!=''">
+     and (ho.gywmTestId like concat('%',#{mohu},'%') or ho.gywmTestName like concat('%',#{mohu},'%')
+     or ho.gywmTypeName like concat('%',#{mohu},'%'))
+      </if> 
+   </select>
+ </mapper>

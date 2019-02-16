@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace唯一标识此名字下的crud语句
+ -->
+ 
+ <mapper namespace="org.tp.ssm_tpzy.mapper.HyzxMapper">
+     
+    <select id="find" resultType="HyzxTest" parameterType="HyzxTest">
+      select * from hyzxTest where is_delete=#{is_delete}
+    </select>
+    
+    <insert id="add" parameterType="HyzxTest">
+      insert into hyzxTest(hyzxTestName,hyzxTypeName,hyzxTestImg,is_delete,createTime) values(#{hyzxTestName},#{hyzxTypeName},#{hyzxTestImg},#{is_delete},#{createTime})
+    </insert>
+    
+    <update id="update" parameterType="HyzxTest">
+     update hyzxTest set hyzxTestName=#{hyzxTestName},hyzxTypeName=#{hyzxTypeName},hyzxTestImg=#{hyzxTestImg},updateTime=#{updateTime} where hyzxTestId=#{hyzxTestId}
+    </update>
+    
+    <select id="showOne" resultType="HyzxTest" parameterType="HyzxTest">
+    select * from hyzxTest where hyzxTestId=#{hyzxTestId}
+    </select>
+    
+    <update id="deleteOne" parameterType="HyzxTest">
+    update hyzxTest set is_delete=#{is_delete} where hyzxTestId=#{hyzxTestId}
+    </update>
+    
+    <select id="show" resultType="HyzxTest" parameterType="java.util.Map">
+      select * from hyzxTest ho where ho.is_delete=#{is_delete}
+    <if test="mohu!=null and mohu!=''">
+     and (ho.hyzxTestId like concat('%',#{mohu},'%') or ho.hyzxTestName like concat('%',#{mohu},'%')
+     or ho.hyzxTypeName like concat('%',#{mohu},'%'))
+      </if> 
+   </select>
+ 
+ </mapper>

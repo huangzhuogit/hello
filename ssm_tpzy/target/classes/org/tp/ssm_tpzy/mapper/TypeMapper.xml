@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace唯一标识此名字下的crud语句
+ -->
+ 
+ <mapper namespace="org.tp.ssm_tpzy.mapper.TypeMapper">
+ 
+     <select id="showAll"  resultType="type" parameterType="type">
+     select * from type where is_delete=#{is_delete}
+  </select>
+  
+  <select id="findOne"  resultType="type" parameterType="type">
+     select * from type where tname=#{tname} and tid!=#{tid}
+  </select>
+  
+  <insert id="add" parameterType="type">
+    insert into type(tname,is_delete,createTime) values(#{tname},#{is_delete},#{createTime})
+  </insert>
+  
+  <update id="update" parameterType="type">
+   update type set tname=#{tname},updateTime=#{updateTime} where tid=#{tid}
+  </update>
+  
+  <delete id="delete" parameterType="type">
+   update type set is_delete=#{is_delete} where tid=#{tid}
+  </delete>
+  
+   <select id="getOne"  resultType="type" parameterType="type">
+     select * from type where tid=#{tid}
+  </select>
+  
+  <select id="find" resultType="type" parameterType="java.util.Map">
+      select * from type ho where ho.is_delete=#{is_delete}
+    <if test="mohu!=null and mohu!=''">
+     and (ho.tid like concat('%',#{mohu},'%') or ho.tname like concat('%',#{mohu},'%'))
+      </if> 
+   </select>
+   
+   <select id="xiala"  resultType="type" parameterType="java.util.Map">
+     select * from type where is_delete=#{is_delete}
+  </select>
+ </mapper>

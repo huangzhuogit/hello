@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+
+ <!-- 扫描项目中的所有类 -->
+     <context:component-scan base-package="org.tp.ssm_tpzy">
+     	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+     </context:component-scan>     
+     
+     <!-- 读取数据库的基本属性文件 -->
+     <context:property-placeholder location="classpath:jdbc.properties"/>
+     
+     <!-- 配置数据源 -->
+     <!-- 配置c3p0连接数据库 -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!-- 配置连接数据库的四大件 -->
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!-- 配置连接池的连接数 -->
+        <property name="maxPoolSize" value="5"/>
+        <property name="minPoolSize" value="1"/>
+	</bean>
+	
+     <!-- 配置sqlSessionFactory 
+     	将mybatis交给spring管理，并且创建sqlSessionFactory
+     -->
+    <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+	</bean>
+    
+    <!-- 扫描Mapper包得到mapper对应的的代理对象 
+		必须符合mapper开发的所有格式：Mybatis_04_Mapper
+	这里需要指定一些属性：	
+		1、mapper所在的包
+		2、SqlSessionFactory对象的名字，是一个字符串
+	-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="org.tp.ssm_tpzy.mapper"/>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+	</bean>
+     
+     <!-- 事物的管理（JDBC）-->
+ 	 <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+ 	 
+     <!-- 打开事务注解驱动 -->
+     <tx:annotation-driven />
+</beans>

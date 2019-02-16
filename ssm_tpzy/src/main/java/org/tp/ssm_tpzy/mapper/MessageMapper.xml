@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace唯一标识此名字下的crud语句
+ -->
+ 
+ <mapper namespace="org.tp.ssm_tpzy.mapper.MessageMapper">
+ 
+
+  <select id="find" resultType="Message" parameterType="Message">
+     select * from Message where is_delete=#{is_delete}
+  </select>
+  
+   <select id="findOne" resultType="Message" parameterType="Message">
+     select * from Message where messId=#{messId}
+  </select>
+  
+  
+    <insert id="add" parameterType="Message">
+    insert into Message(messageName,messagePhone,messageMark,is_delete,createTime) values(#{messageName},#{messagePhone},#{messageMark},#{is_delete},#{createTime})
+  </insert>
+  
+    <update id="delete" parameterType="Message">
+    update Message set is_delete=#{is_delete},updateTime=#{updateTime} where messId=#{messId}
+   </update>
+   
+    <update id="update" parameterType="Message">
+    update Message set messageName=#{messageName},messageMark=#{messageMark},messagePhone=#{messagePhone},updateTime=#{updateTime} where messId=#{messId}
+   </update>
+   
+     <select id="showGood" resultType="Message" parameterType="java.util.Map">
+      select * from Message ms  where ms.is_delete=#{is_delete}
+    <if test="mohu!=null and mohu!=''">
+     and (ms.messId like concat('%',#{mohu},'%') or ms.messageName like concat('%',#{mohu},'%')
+     or ms.messageMark like concat('%',#{mohu},'%') or ms.messagePhone like concat('%',#{mohu},'%'))
+      </if> 
+   </select>
+   
+    <delete id="del" parameterType="Message">
+     delete from Message where messId=#{messId}
+    </delete>
+ </mapper>

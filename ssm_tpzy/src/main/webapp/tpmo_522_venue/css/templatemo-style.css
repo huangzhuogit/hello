@@ -1,0 +1,71 @@
+
+.popular-places .owl-nav {
+  display: none;
+}
+
+.popular-places .owl-dots {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.popular-places .owl-dots .owl-dot span  {
+  width: 12px;
+  height: 12px;
+  background-color: #cdcdcd!important;
+  display: inline-block;
+  border-radius: 50%;
+  margin: 0 3px;
+}
+
+.popular-places .owl-dots .active span {
+  background-color: #4883ff!important;
+}
+
+.popular-places .owl-dots button {
+  outline: none;
+}
+
+.popular-places .popular-item .thumb {
+  position: relative;
+}
+
+.popular-places .popular-item .thumb img {
+  position: relative;
+  width: 100%;
+   z-index: 1;
+ 
+}
+
+.popular-places .popular-item .thumb .text-content {
+  position: absolute;
+  background:rgba(0, 138, 255, 0.39);
+  width:100%;
+  bottom: 0px;
+ 
+  z-index: 9;
+  color: #fff;
+}
+
+.popular-places .popular-item .thumb .text-content h4 {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.popular-places .popular-item .thumb .text-content span {
+  font-size: 13px;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  display: block;
+}
+
+.popular-places .popular-item .thumb .plus-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9;
+}
+
+

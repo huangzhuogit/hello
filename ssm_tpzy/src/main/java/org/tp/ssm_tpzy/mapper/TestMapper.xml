@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace唯一标识此名字下的crud语句
+ -->
+ <mapper namespace="org.tp.ssm_tpzy.mapper.TestMapper">
+   
+  <resultMap type="org.tp.ssm_tpzy.pojo.Test" id="userReMap">
+      <id column="id" property="id"/>
+		     <result column="name" property="name" />
+			<result column="img" property="img"/>
+			<result column="mark" property="mark"/>
+			<result column="product" property="product"/>
+			<result column="territory" property="territory"/>
+			<result column="tvideo" property="tvideo"/>
+			<result column="createTime" property="createTime"/>
+			<result column="updateTime" property="updateTime"/>
+			<result column="is_delete" property="is_delete"/>
+		 <association property="type" javaType="org.tp.ssm_tpzy.pojo.Type">
+		     <id column="tid" property="tid"/>
+			<result column="tname" property="tname"/>
+		 </association>
+	</resultMap>
+ 
+ 
+  <select id="findAllByPage" resultMap="userReMap" parameterType="test">
+     select ts.*,ty.tid,ty.tname from test ts, type ty where ts.tid=ty.tid and ts.is_delete=#{is_delete}
+  </select>
+  
+  <insert id="addByUser" parameterType="test">
+    insert into test(name,mark,is_delete,createTime,img,tid,product,territory,tvideo) 
+    values(#{name},#{mark},#{is_delete},#{createTime},#{img},#{type.tid},#{product},#{territory},#{tvideo})
+  </insert>
+  
+    <select id="findOne"  resultType="test" parameterType="test">
+     select * from test where name=#{name} and id!=#{id}
+  </select>
+  
+  <select id="getOne" resultType="test" parameterType="test">
+    select * from test where id=#{id}
+  </select>
+  
+  <update id="delete" parameterType="test">
+    update test set is_delete=#{is_delete} where id=#{id}
+   </update>
+   
+    <update id="update" parameterType="test">
+    update test set name=#{name},mark=#{mark},updateTime=#{updateTime},img=#{img},tid=#{type.tid},product=#{product}
+    ,territory=#{territory},tvideo=#{tvideo} where id=#{id}
+   </update>
+   
+   
+     
+  <select id="showGood" resultMap="userReMap" parameterType="java.util.Map">
+      select ho.*, ty.tid,ty.tname from test ho , type ty where ho.tid=ty.tid and ho.is_delete=#{is_delete}
+    <if test="mohu!=null and mohu!=''">
+     and (ho.id like concat('%',#{mohu},'%') or ho.name like concat('%',#{mohu},'%')
+     or ho.mark like concat('%',#{mohu},'%') or ho.product like concat('%',#{mohu},'%')
+     or ho.territory like concat('%',#{mohu},'%') or ho.tvideo like concat('%',#{mohu},'%'))
+      </if> 
+   </select>
+ </mapper>
